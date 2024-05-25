@@ -16,6 +16,8 @@ What I would like to do is add some features such as:
 - Creating a UI for the game instead of having it in the command line.
 - Allowing players to choose the difficulty of their game, which will affect how many lives they get.
 - Giving players the option to choose if they want a short, medium, or long word.
+- Giving players the option to guess the word outright
+- Displaying the number of letters prior to the first guess
 
 ## Future Learning Goals
 
