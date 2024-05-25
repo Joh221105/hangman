@@ -51,7 +51,7 @@ while not length_of_word_chosen:
     else:
         print('Sorry, please choose s for a short word, m for a medium word, l for a long word')
 
-guessing_word = temp_guess_word
+guessing_word = temp_guess_word.lower()
 
 count = 0
 
@@ -59,6 +59,8 @@ guessed_letters = []
 
 hangman_ui = ["_ "]*len(guessing_word)
 print(" ".join(hangman_ui))
+
+print(guessing_word)
 
 while True:
 
@@ -73,13 +75,19 @@ while True:
         else:
             print(f"You win! The word was {guessing_word}, you had {lives} lives remaining")
             break
-    user_guess = input("Enter a letter: ").lower()
+
+    user_guess = input("Enter a letter or guess the word: ").lower()
+
+    if user_guess == guessing_word and lives > 0:
+        print(f'YES YOU GOT IT! THE WORD WAS: {guessing_word}')
+        break
+
 
     if user_guess == "quit":
         break
 
-    if len(user_guess) > 1 or len(user_guess) == 0:
-        print("Please enter 1 letter")
+    if len(user_guess) == 0:
+        print("Please enter 1 letter or guess a word")
         continue
 
     elif user_guess in guessed_letters:
@@ -91,11 +99,17 @@ while True:
             if x == user_guess:
                 hangman_ui[index] = x
 
-    elif user_guess not in guessing_word:
-        guessed_letters.append(user_guess)
-        lives -= 1
-        print(f'You have {lives} lives remaining')
+    if user_guess != guessing_word:
+        if len(user_guess) == 1 and user_guess not in guessing_word:
+            guessed_letters.append(user_guess)
+            lives -= 1
+            print(f'You have {lives} lives remaining')
+        elif len(user_guess) > 1:
+            guessed_letters.append(user_guess)
+            print(f'No the word is not {user_guess}, try again or guess a letter')
+            lives -= 1
+            print(f'You have {lives} lives remaining')
 
-    print(f'Letters you have guessed: {guessed_letters}')
+    print(f'Letters/Words you have guessed: {guessed_letters}')
     print(" ".join(hangman_ui))
     print('\n')
