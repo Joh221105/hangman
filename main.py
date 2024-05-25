@@ -14,8 +14,20 @@ guessed_letters = []
 
 hangman_ui = ["_ "]*len(guessing_word)
 
+lives = None
+
+while lives == None:
+    difficulty_setting = input('Choose a difficulty: easy, medium, or hard: ').lower()
+    if difficulty_setting == 'easy':
+        lives = 9
+    elif difficulty_setting == 'medium':
+        lives = 6
+    elif difficulty_setting == 'hard':
+        lives = 3
+    else:
+        print("Sorry I didn't get that, would you like to play on easy, medium, or hard difficulty?")
+
 count = 0
-lives = 5
 
 while True:
 
