@@ -60,8 +60,6 @@ guessed_letters = []
 hangman_ui = ["_ "]*len(guessing_word)
 print(" ".join(hangman_ui))
 
-print(guessing_word)
-
 while True:
 
     if lives == 0:
