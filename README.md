@@ -26,6 +26,8 @@ I plan on learning how to use libraries such as:
 - Tkinter to make the GUI and enhance user experience.
 - Other libraries to further improve the functionality and aesthetics of the game.
 
+- Practice with version control, branching, and merging branches
+
 
 Enjoy playing Hangman and stay tuned for updates!
 
