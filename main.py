@@ -58,6 +58,7 @@ count = 0
 guessed_letters = []
 
 hangman_ui = ["_ "]*len(guessing_word)
+print(" ".join(hangman_ui))
 
 while True:
 
