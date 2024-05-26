@@ -1,7 +1,13 @@
 from tkinter import *
 import random
+import requests
 
-word_bank = ['apple', 'watermelon', 'cat']
+website = "https://www.mit.edu/~ecprice/wordlist.10000"
+
+response = requests.get(website)
+
+words = list(response.content.splitlines())
+
 guessed_letters = []
 word_list_form = []
 
@@ -34,17 +40,17 @@ def generate_word(word_length, short_but, med_but, long_but, word_display):
     word_display.destroy()
 
     # Filter out words to get a word with appropriate length
-    test_word = random.choice(word_bank)
+    test_word = str(random.choice(words)).replace("b", "", 1).replace('\'', "")
 
     if word_length == 4:
         while len(test_word) > 4:
-            test_word = random.choice(word_bank)
+            test_word = str(random.choice(words)).replace("b", "", 1).replace('\'', "")
     elif word_length == 7:
         while len(test_word) <= 4 and len(test_word) < 7:
-            test_word = random.choice(word_bank)
+            test_word = str(random.choice(words)).replace("b", "", 1).replace('\'', "")
     elif word_length == 15: 
         while len(test_word) <=7:
-            test_word = random.choice(word_bank)
+            test_word = str(random.choice(words)).replace("b", "", 1).replace('\'', "")
 
     start_game(test_word)
 
@@ -107,7 +113,7 @@ def submit_input(entry, canvas, word_display, hangman_word, hangman_image, guess
                 canvas.itemconfig(hangman_image, image=hangman_stages[lives])
             elif lives < 0:
                 canvas.itemconfig(hangman_image, image=hangman_stages[6])
-                result_label.config(text="OUT OF LIVES, YOU LOSE!", font=("Arial", 15))
+                result_label.config(text=f"OUT OF LIVES, THE WORD WAS {hangman_word.upper()}", font=("Arial", 15))
                 entry.destroy()
                 # TODO
                     # CREATE A BUTTON TO REPLAY

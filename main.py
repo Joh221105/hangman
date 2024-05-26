@@ -16,39 +16,37 @@ length_of_word_chosen = False
 temp_guess_word = None
 word_chosen = False
 
-while not length_of_word_chosen:
-    length_choice = input('Would you like a short(s), medium(m), or long(l) word: ').lower()
-    if length_choice == 's' or length_choice == 'short':
-        while not word_chosen:
-            temp_guess_word = str(random.choice(words)).replace("b", "").replace('\'', "")
-            if len(temp_guess_word) <=4:
-                word_chosen = True
-        length_of_word_chosen = True
+# while not length_of_word_chosen:
+#     length_choice = input('Would you like a short(s), medium(m), or long(l) word: ').lower()
+#     if length_choice == 's' or length_choice == 'short':
+#         while not word_chosen:
+#             temp_guess_word = str(random.choice(words)).replace("b", "").replace('\'', "")
+#             if len(temp_guess_word) <=4:
+#                 word_chosen = True
+#         length_of_word_chosen = True
 
-    elif length_choice == 'm' or length_choice == 'medium':
-        while not word_chosen:
-            temp_guess_word = str(random.choice(words)).replace("b", "").replace('\'', "")
-            if len(temp_guess_word) > 4 and len(temp_guess_word) <= 7:
-                word_chosen = True
-        length_of_word_chosen = True
+#     elif length_choice == 'm' or length_choice == 'medium':
+#         while not word_chosen:
+#             temp_guess_word = str(random.choice(words)).replace("b", "").replace('\'', "")
+#             if len(temp_guess_word) > 4 and len(temp_guess_word) <= 7:
+#                 word_chosen = True
+#         length_of_word_chosen = True
 
-    elif length_choice == 'l' or length_choice == 'long':
-        while not word_chosen:
-            temp_guess_word = str(random.choice(words)).replace("b", "").replace('\'', "")
-            if len(temp_guess_word) > 7 and len(temp_guess_word) <= 15:
-                word_chosen = True
-        length_of_word_chosen = True
-    else:
-        print('Sorry, please choose s for a short word, m for a medium word, l for a long word')
+#     elif length_choice == 'l' or length_choice == 'long':
+#         while not word_chosen:
+#             temp_guess_word = str(random.choice(words)).replace("b", "").replace('\'', "")
+#             if len(temp_guess_word) > 7 and len(temp_guess_word) <= 15:
+#                 word_chosen = True
+#         length_of_word_chosen = True
+#     else:
+#         print('Sorry, please choose s for a short word, m for a medium word, l for a long word')
 
 guessing_word = temp_guess_word.lower()
 
-count = 0
+# guessed_letters = []
 
-guessed_letters = []
-
-hangman_ui = ["_ "]*len(guessing_word)
-print(" ".join(hangman_ui))
+# hangman_ui = ["_ "]*len(guessing_word)
+# print(" ".join(hangman_ui))
 
 while True:
 
