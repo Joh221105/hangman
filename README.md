@@ -13,8 +13,7 @@ I built the classic game of Hangman a few years ago, and it is currently played 
 
 What I would like to do is add some features such as:
 
-- Creating a UI for the game instead of having it in the command line.
-- Allowing players to choose the difficulty of their game, which will affect how many lives they get.
+- Creating a GUI for the game instead of having it in the command line.
 - Giving players the option to choose if they want a short, medium, or long word.
 - Giving players the option to guess the word outright
 - Displaying the number of letters prior to the first guess
