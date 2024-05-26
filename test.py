@@ -4,8 +4,11 @@ import random
 word_bank = ['apple', 'watermelon', 'cat']
 test_word = random.choice(word_bank)
 
+lives = 5
 
 def submit_input(event=None):
+    result_label.config(text="")
+    global lives
     user_input = entry.get().strip()
     
     if len(user_input) != 1 or not user_input.isalpha():
@@ -15,7 +18,12 @@ def submit_input(event=None):
             print('Yes, that letter is in the word')
         else:
             print('No, that letter is not in the word')
-        result_label.config(text="")
+            lives -= 1
+            if lives >= 0:
+                canvas.itemconfig(hangman_image, image=hangman_stages[lives])
+            elif lives < 0:
+                canvas.itemconfig(hangman_image, image=hangman_stages[6])
+                result_label.config(text="OUT OF LIVES, YOU LOSE!", font=("Arial", 15))
     
     entry.delete(0, 'end')
 
@@ -25,22 +33,24 @@ root.title('Hangman')
 root.minsize(width=2000, height=1000)
 
 
-canvas = Canvas(root, width=975, height=605)
+canvas = Canvas(root, width=1400, height=800)
 
 
 hangman_stages = [
-    PhotoImage(file="hangman/images/hangman0.png"),
-    PhotoImage(file="hangman/images/hangman1.png"),
-    PhotoImage(file="hangman/images/hangman2.png"),
-    PhotoImage(file="hangman/images/hangman3.png"),
-    PhotoImage(file="hangman/images/hangman4.png"),
-    PhotoImage(file="hangman/images/hangman5.png"),
+    PhotoImage(file="images/hangman0.png"),
+    PhotoImage(file="images/hangman1.png"),
+    PhotoImage(file="images/hangman2.png"),
+    PhotoImage(file="images/hangman3.png"),
+    PhotoImage(file="images/hangman4.png"),
+    PhotoImage(file="images/hangman5.png"),
+    PhotoImage(file="images/hangman_lose.png"),
+    PhotoImage(file="images/hangman_win.png")
 ]
 
-hangman_image = canvas.create_image(500, 350, image=hangman_stages[5])
+hangman_image = canvas.create_image(700, 400, image=hangman_stages[5])
 canvas.pack()
 
-instruction = Label(root, text="Enter a number between 0 and 5:")
+instruction = Label(root, text="Enter a letter a-z")
 instruction.pack()
 
 entry = Entry(root, width=50)
