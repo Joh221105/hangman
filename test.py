@@ -1,4 +1,8 @@
 from tkinter import *
+import random
+
+word_bank = ['apple', 'watermelon', 'cat']
+test_word = random.choice(word_bank)
 
 
 def submit_input(event=None):
@@ -40,6 +44,9 @@ instruction.pack()
 
 entry = Entry(root, width=50)
 entry.pack()
+
+word_display = Label(root, text="_ " * len(test_word), font=("Arial", 20))
+word_display.pack()
 
 entry.bind('<Return>', submit_input)
 
