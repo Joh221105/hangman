@@ -72,7 +72,7 @@ def start_game(hangman_word):
 
 def hangman_game(canvas, hangman_image, word_display, hangman_word):
 
-    guessed_list = Label(text=f'{guessed_letters}')
+    guessed_list = Label(text=f'{guessed_letters}', font=('Arial', 20), pady=20)
     guessed_list.pack()
 
     # listens to enter key and passes user input to submit input function
@@ -90,12 +90,16 @@ def submit_input(entry, canvas, word_display, hangman_word, hangman_image, guess
         result_label.config(text="Invalid input, please enter a single letter")
     else:
         if user_input in hangman_word:
-            print('Yes, that letter is in the word')
             guessed_letters.append(user_input)
             guessed_list.config(text=f'Guessed Letters: {" ".join(guessed_letters)}')
             update_blanks(word_display, hangman_word, user_input)
+            if '_ ' not in word_list_form and lives >= 0:
+                canvas.itemconfig(hangman_image, image=hangman_stages[7])
+                result_label.config(text=f"YOU WIN! THE WORD WAS: {hangman_word.upper()}", font=("Arial", 15))
+                entry.destroy()
+                # TODO
+                    # CREATE A BUTTON TO REPLAY
         else:
-            print('No, that letter is not in the word')
             guessed_letters.append(user_input)
             guessed_list.config(text=f'Guessed Letters: {" ".join(guessed_letters)}')
             lives -= 1
@@ -104,6 +108,9 @@ def submit_input(entry, canvas, word_display, hangman_word, hangman_image, guess
             elif lives < 0:
                 canvas.itemconfig(hangman_image, image=hangman_stages[6])
                 result_label.config(text="OUT OF LIVES, YOU LOSE!", font=("Arial", 15))
+                entry.destroy()
+                # TODO
+                    # CREATE A BUTTON TO REPLAY
     
     entry.delete(0, 'end')
 
@@ -119,7 +126,7 @@ def update_blanks(word_display, hangman_word, user_input):
 
 root = Tk()
 root.title('Hangman')
-root.minsize(width=2000, height=1000)
+root.minsize(width=2000, height=1500)
 
 start_button = Button(root, text="Start Game", command=choose_difficulty)
 start_button.pack()
@@ -136,7 +143,7 @@ hangman_stages = [
     PhotoImage(file="images/hangman_win.png")
 ]
 
-result_label = Label(root, text="")
+result_label = Label(root, text="", font=('Arial', 20))
 result_label.pack(pady=10)
 
 root.mainloop()
