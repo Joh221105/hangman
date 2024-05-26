@@ -2,16 +2,14 @@ from tkinter import *
 import random
 import requests
 
+
+# Load word list from the website
 website = "https://www.mit.edu/~ecprice/wordlist.10000"
-
 response = requests.get(website)
-
 words = list(response.content.splitlines())
 
 guessed_letters = []
 word_list_form = []
-
-
 lives = 5
 
 def choose_difficulty(start_button):
@@ -26,10 +24,13 @@ def choose_difficulty(start_button):
     # generate 3 buttons to choose word length
     short_word_button = Button(root, text="Short word", command=lambda:generate_word(4, short_word_button, medium_word_button, long_word_button, word_display), font=("Arial", 15))
     short_word_button.pack(pady=20)
+
     medium_word_button = Button(root, text="Medium word", command=lambda:generate_word(7, short_word_button, medium_word_button, long_word_button, word_display),font=("Arial", 15))
     medium_word_button.pack(pady=20)
+
     long_word_button = Button(root, text="Long word", command=lambda:generate_word(15, short_word_button, medium_word_button, long_word_button, word_display),font=("Arial", 15))
     long_word_button.pack(pady=20)
+
 
 def generate_word(word_length, short_word_button, medium_word_button, long_word_button, word_display):
     
@@ -45,19 +46,23 @@ def generate_word(word_length, short_word_button, medium_word_button, long_word_
     if word_length == 4:
         while len(test_word) > 4:
             test_word = str(random.choice(words)).replace("b", "", 1).replace('\'', "")
+
     elif word_length == 7:
         while len(test_word) <= 4 and len(test_word) > 7:
             test_word = str(random.choice(words)).replace("b", "", 1).replace('\'', "")
+
     elif word_length == 15: 
         while len(test_word) <=7:
             test_word = str(random.choice(words)).replace("b", "", 1).replace('\'', "")
 
     start_game(test_word)
 
+
 def start_game(hangman_word):
 
     global word_list_form
 
+    # initialize tkinter widgets
     result_label = Label(root, text="", font=('Arial', 20))
     result_label.pack(pady=10)
 
@@ -93,14 +98,19 @@ def hangman_game(canvas, hangman_image, word_display, hangman_word, result_label
 def submit_input(entry, canvas, word_display, hangman_word, hangman_image, guessed_list,result_label):
     global lives
     result_label.config(text="")
+
+    # saves user input in a variable
     user_input = entry.get().strip().lower()
     
+    # rejects any input that is not all letters
     if not user_input.isalpha():
         result_label.config(text="Invalid input, please enter a single letter/word")
 
+    # rejects inputs that have already been entered
     elif user_input in guessed_letters:
         result_label.config(text=f"YOU ALREADY GUESSED THE LETTER: {user_input}", font=("Arial", 15))
 
+    # tests if user word input is the same as the word they are trying to guess
     elif user_input == hangman_word and lives >= 0:
         result_label.config(text=f"YOU WIN! THE WORD WAS: {hangman_word.upper()}", font=("Arial", 15))
         word_display.config(text=f"{hangman_word}")
@@ -109,6 +119,7 @@ def submit_input(entry, canvas, word_display, hangman_word, hangman_image, guess
         replay_button.pack()
         return None
 
+    # logic to deal with user word guesses that are wrong
     elif user_input != hangman_word and len(user_input) > 1 and lives >=0:
         result_label.config(text=f"Wrong! The word is not {user_input}, guess again", font=("Arial", 15))
         guessed_letters.append(user_input)
@@ -117,6 +128,7 @@ def submit_input(entry, canvas, word_display, hangman_word, hangman_image, guess
         guessed_list.config(text=f'Guessed Letters/Words: {", ".join(guessed_letters)}')
 
     else:
+        # logic to deal with correct single letter guesses and checks to see if player has won
         if user_input in hangman_word:
             guessed_letters.append(user_input)
             guessed_list.config(text=f'Guessed Letters/Words: {", ".join(guessed_letters)}')
@@ -128,6 +140,7 @@ def submit_input(entry, canvas, word_display, hangman_word, hangman_image, guess
                 replay_button = Button(root, text="Replay", command=reset_game, font=("Arial", 15))
                 replay_button.pack()
                 return None
+        # logic to deal with incorrect single letter guesses and checks to see if player has lost
         else:
             guessed_letters.append(user_input)
             guessed_list.config(text=f'Guessed Letters/Words: {", ".join(guessed_letters)}')
@@ -142,9 +155,13 @@ def submit_input(entry, canvas, word_display, hangman_word, hangman_image, guess
                 replay_button.pack()
                 return None
     
+    # resets the entry box to blank for next guess
     entry.delete(0, 'end')
 
+
 def update_blanks(word_display, hangman_word, user_input):
+
+    # function to update blanks when the user guesses correctly
 
     global word_list_form
 
@@ -153,7 +170,9 @@ def update_blanks(word_display, hangman_word, user_input):
                 word_list_form[index] = x
     word_display.config(text=f"{' '.join(word_list_form)}")
 
+
 def reset_game():
+    # function to reset all variables and destroys all of the existing widgets and reinitialize the start button
     global guessed_letters, lives, word_list_form
 
     for widget in root.winfo_children():
@@ -165,15 +184,17 @@ def reset_game():
     start_button.pack(pady=500)
     
 
-
+# Initialize tkinter
 root = Tk()
 root.title('Hangman')
 root.minsize(width=2000, height=1500)
 
+
+# Initialize start button 
 start_button = Button(root, text="Start Game", command=lambda:choose_difficulty(start_button), font=("Arial", 15))
 start_button.pack(pady=500)
 
-
+# List containing required graphics 
 hangman_stages = [
     PhotoImage(file="images/hangman0.png"),
     PhotoImage(file="images/hangman1.png"),
