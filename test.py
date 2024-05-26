@@ -24,11 +24,11 @@ def choose_difficulty(start_button):
     word_display.pack(ipady=100)
 
     # generate 3 buttons to choose word length
-    short_word_button = Button(root, text="Short word", command=lambda:generate_word(4, short_word_button, medium_word_button, long_word_button, word_display))
+    short_word_button = Button(root, text="Short word", command=lambda:generate_word(4, short_word_button, medium_word_button, long_word_button, word_display), font=("Arial", 15))
     short_word_button.pack(pady=20)
-    medium_word_button = Button(root, text="Medium word", command=lambda:generate_word(7, short_word_button, medium_word_button, long_word_button, word_display))
+    medium_word_button = Button(root, text="Medium word", command=lambda:generate_word(7, short_word_button, medium_word_button, long_word_button, word_display),font=("Arial", 15))
     medium_word_button.pack(pady=20)
-    long_word_button = Button(root, text="Long word", command=lambda:generate_word(15, short_word_button, medium_word_button, long_word_button, word_display))
+    long_word_button = Button(root, text="Long word", command=lambda:generate_word(15, short_word_button, medium_word_button, long_word_button, word_display),font=("Arial", 15))
     long_word_button.pack(pady=20)
 
 def generate_word(word_length, short_word_button, medium_word_button, long_word_button, word_display):
@@ -85,7 +85,7 @@ def hangman_game(canvas, hangman_image, word_display, hangman_word, result_label
     guessed_list.pack()
 
     # listens to enter key and passes user input to submit input function
-    entry = Entry(root, width=50)
+    entry = Entry(root, width=50, font=("Arial", 20))
     entry.pack()
     entry.bind('<Return>', lambda event: submit_input(entry, canvas, word_display, hangman_word, hangman_image, guessed_list, result_label))
 
@@ -161,7 +161,7 @@ def reset_game():
     guessed_letters = []
     lives = 5
     word_list_form = []
-    start_button = Button(root, text="Start Game", command=lambda: choose_difficulty(start_button))
+    start_button = Button(root, text="Start Game", command=lambda: choose_difficulty(start_button),font=("Arial", 15))
     start_button.pack(pady=500)
     
 
@@ -170,7 +170,7 @@ root = Tk()
 root.title('Hangman')
 root.minsize(width=2000, height=1500)
 
-start_button = Button(root, text="Start Game", command=lambda:choose_difficulty(start_button))
+start_button = Button(root, text="Start Game", command=lambda:choose_difficulty(start_button), font=("Arial", 15))
 start_button.pack(pady=500)
 
 
