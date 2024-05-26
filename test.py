@@ -3,6 +3,7 @@ import random
 
 word_bank = ['apple', 'watermelon', 'cat']
 guessed_letters = []
+word_list_form = []
 
 
 lives = 5
@@ -49,6 +50,8 @@ def generate_word(word_length, short_but, med_but, long_but, word_display):
 
 def start_game(hangman_word):
 
+    global word_list_form
+
     canvas = Canvas(root, width=1400, height=800) 
 
     hangman_image = canvas.create_image(700, 400, image=hangman_stages[5])
@@ -57,6 +60,8 @@ def start_game(hangman_word):
     # instruction label for entry
     instruction = Label(root, text="Enter a letter a-z")
     instruction.pack()
+
+    word_list_form = ["_ "]*len(hangman_word)
 
     # generates _ for each letter in the word
     word_display = Label(root, text="_ " * len(hangman_word), font=("Arial", 20), pady=20)
@@ -88,7 +93,7 @@ def submit_input(entry, canvas, word_display, hangman_word, hangman_image, guess
             print('Yes, that letter is in the word')
             guessed_letters.append(user_input)
             guessed_list.config(text=f'Guessed Letters: {" ".join(guessed_letters)}')
-            update_blanks(word_display, user_input)
+            update_blanks(word_display, hangman_word, user_input)
         else:
             print('No, that letter is not in the word')
             guessed_letters.append(user_input)
@@ -102,10 +107,15 @@ def submit_input(entry, canvas, word_display, hangman_word, hangman_image, guess
     
     entry.delete(0, 'end')
 
-def update_blanks(word_display, user_input):
-    # TODO
-    # update the word blank labels
-    pass
+def update_blanks(word_display, hangman_word, user_input):
+
+    global word_list_form
+
+    for index, x in enumerate(hangman_word):
+            if x == user_input:
+                word_list_form[index] = x
+    word_display.config(text=f"{' '.join(word_list_form)}")
+
 
 root = Tk()
 root.title('Hangman')
