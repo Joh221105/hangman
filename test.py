@@ -94,6 +94,9 @@ def submit_input(entry, canvas, word_display, hangman_word, hangman_image, guess
     
     if len(user_input) != 1 or not user_input.isalpha():
         result_label.config(text="Invalid input, please enter a single letter")
+
+    elif user_input in guessed_letters:
+        result_label.config(text=f"YOU ALREADY GUESSED THE LETTER: {user_input}", font=("Arial", 15))
     else:
         if user_input in hangman_word:
             guessed_letters.append(user_input)
