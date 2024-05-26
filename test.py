@@ -90,17 +90,30 @@ def hangman_game(canvas, hangman_image, word_display, hangman_word):
 def submit_input(entry, canvas, word_display, hangman_word, hangman_image, guessed_list):
     global lives, result_label
     result_label.config(text="")
-    user_input = entry.get().strip()
+    user_input = entry.get().strip().lower()
     
-    if len(user_input) != 1 or not user_input.isalpha():
-        result_label.config(text="Invalid input, please enter a single letter")
+    if not user_input.isalpha():
+        result_label.config(text="Invalid input, please enter a single letter/word")
 
     elif user_input in guessed_letters:
         result_label.config(text=f"YOU ALREADY GUESSED THE LETTER: {user_input}", font=("Arial", 15))
+
+    elif user_input == hangman_word and lives >= 0:
+        result_label.config(text=f"YOU WIN! THE WORD WAS: {hangman_word.upper()}", font=("Arial", 15))
+        word_display.config(text=f"{hangman_word}")
+        entry.destroy()
+
+    elif user_input != hangman_word and len(user_input) > 1 and lives >=0:
+        result_label.config(text=f"Wrong! The word is not {user_input}, guess again", font=("Arial", 15))
+        guessed_letters.append(user_input)
+        lives -= 1
+        canvas.itemconfig(hangman_image, image=hangman_stages[lives])
+        guessed_list.config(text=f'Guessed Letters/Words: {", ".join(guessed_letters)}')
+
     else:
         if user_input in hangman_word:
             guessed_letters.append(user_input)
-            guessed_list.config(text=f'Guessed Letters: {" ".join(guessed_letters)}')
+            guessed_list.config(text=f'Guessed Letters/Words: {", ".join(guessed_letters)}')
             update_blanks(word_display, hangman_word, user_input)
             if '_ ' not in word_list_form and lives >= 0:
                 canvas.itemconfig(hangman_image, image=hangman_stages[7])
@@ -110,7 +123,7 @@ def submit_input(entry, canvas, word_display, hangman_word, hangman_image, guess
                     # CREATE A BUTTON TO REPLAY
         else:
             guessed_letters.append(user_input)
-            guessed_list.config(text=f'Guessed Letters: {" ".join(guessed_letters)}')
+            guessed_list.config(text=f'Guessed Letters/Words: {", ".join(guessed_letters)}')
             lives -= 1
             if lives >= 0:
                 canvas.itemconfig(hangman_image, image=hangman_stages[lives])
