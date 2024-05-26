@@ -1,12 +1,27 @@
 from tkinter import *
 
+
+def submit_input(event=None):
+    try:
+        user_input = int(entry.get())
+        
+        if 0 <= user_input <= 5:
+            canvas.itemconfig(hangman_image, image=hangman_stages[user_input])
+        else:
+            result_label.config(text="Please enter a number between 0 and 5")
+    except ValueError:
+        result_label.config(text="Invalid input, please enter a valid number")
+    finally:
+        entry.delete(0, 'end')
+
+
 root = Tk()
 root.title('Hangman')
 root.minsize(width=2000, height=1000)
 
-lives = 5
 
-canvas = Canvas(width=975, height=605)
+canvas = Canvas(root, width=975, height=605)
+
 
 hangman_stages = [
     PhotoImage(file="images/hangman0.png"),
@@ -17,26 +32,18 @@ hangman_stages = [
     PhotoImage(file="images/hangman5.png"),
 ]
 
-conditional_images = [
-    PhotoImage(file="images/hangman_lose.png"),
-    PhotoImage(file="images/hangman_win.png"),
-]
-
-def decrease_life():
-    global lives, hangman_image
-    lives -= 1
-    if lives >= 0:
-        canvas.itemconfig(hangman_image, image=hangman_stages[lives])
-        print("Lives:", lives)
-
-
-button = Button(text = 'Decrease Life', command = decrease_life)    
-button.pack()
-
-hangman_image = canvas.create_image(500, 350, image=hangman_stages[lives])
+hangman_image = canvas.create_image(500, 350, image=hangman_stages[5])
 canvas.pack()
 
+instruction = Label(root, text="Enter a number between 0 and 5:")
+instruction.pack()
 
+entry = Entry(root, width=50)
+entry.pack()
 
+entry.bind('<Return>', submit_input)
+
+result_label = Label(root, text="")
+result_label.pack(pady=10)
 
 root.mainloop()
