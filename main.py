@@ -1,5 +1,6 @@
 import random
 import requests
+from tkinter import *
 
 website = "https://www.mit.edu/~ecprice/wordlist.10000"
 
@@ -9,40 +10,29 @@ words = list(response.content.splitlines())
 
 guessing_word = None
 
-lives = None
-
-while lives == None:
-    difficulty_setting = input('Choose a difficulty: easy, medium, or hard: ').lower()
-    if difficulty_setting == 'easy':
-        lives = 9
-    elif difficulty_setting == 'medium':
-        lives = 6
-    elif difficulty_setting == 'hard':
-        lives = 3
-    else:
-        print("Sorry I didn't get that, would you like to play on easy, medium, or hard difficulty?")
+lives = 6
 
 length_of_word_chosen = False
 temp_guess_word = None
 word_chosen = False
 
 while not length_of_word_chosen:
-    length_choice = input('Type s for a short word, m for a medium word, or l for a long word: ').lower()
-    if length_choice == 's':
+    length_choice = input('Would you like a short(s), medium(m), or long(l) word: ').lower()
+    if length_choice == 's' or length_choice == 'short':
         while not word_chosen:
             temp_guess_word = str(random.choice(words)).replace("b", "").replace('\'', "")
             if len(temp_guess_word) <=4:
                 word_chosen = True
         length_of_word_chosen = True
 
-    elif length_choice == 'm':
+    elif length_choice == 'm' or length_choice == 'medium':
         while not word_chosen:
             temp_guess_word = str(random.choice(words)).replace("b", "").replace('\'', "")
             if len(temp_guess_word) > 4 and len(temp_guess_word) <= 7:
                 word_chosen = True
         length_of_word_chosen = True
 
-    elif length_choice == 'l':
+    elif length_choice == 'l' or length_choice == 'long':
         while not word_chosen:
             temp_guess_word = str(random.choice(words)).replace("b", "").replace('\'', "")
             if len(temp_guess_word) > 7 and len(temp_guess_word) <= 15:
