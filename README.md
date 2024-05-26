@@ -17,6 +17,7 @@ What I would like to do is add some features such as:
 - Giving players the option to choose if they want a short, medium, or long word.
 - Giving players the option to guess the word outright
 - Displaying the number of letters prior to the first guess
+- Allowing the user to replay the game
 
 ## Future Learning Goals
 
