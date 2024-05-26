@@ -6,17 +6,18 @@ test_word = random.choice(word_bank)
 
 
 def submit_input(event=None):
-    try:
-        user_input = int(entry.get())
-        
-        if 0 <= user_input <= 5:
-            canvas.itemconfig(hangman_image, image=hangman_stages[user_input])
+    user_input = entry.get().strip()
+    
+    if len(user_input) != 1 or not user_input.isalpha():
+        result_label.config(text="Invalid input, please enter a single letter")
+    else:
+        if user_input in test_word:
+            print('Yes, that letter is in the word')
         else:
-            result_label.config(text="Please enter a number between 0 and 5")
-    except ValueError:
-        result_label.config(text="Invalid input, please enter a valid number")
-    finally:
-        entry.delete(0, 'end')
+            print('No, that letter is not in the word')
+        result_label.config(text="")
+    
+    entry.delete(0, 'end')
 
 
 root = Tk()
@@ -28,12 +29,12 @@ canvas = Canvas(root, width=975, height=605)
 
 
 hangman_stages = [
-    PhotoImage(file="images/hangman0.png"),
-    PhotoImage(file="images/hangman1.png"),
-    PhotoImage(file="images/hangman2.png"),
-    PhotoImage(file="images/hangman3.png"),
-    PhotoImage(file="images/hangman4.png"),
-    PhotoImage(file="images/hangman5.png"),
+    PhotoImage(file="hangman/images/hangman0.png"),
+    PhotoImage(file="hangman/images/hangman1.png"),
+    PhotoImage(file="hangman/images/hangman2.png"),
+    PhotoImage(file="hangman/images/hangman3.png"),
+    PhotoImage(file="hangman/images/hangman4.png"),
+    PhotoImage(file="hangman/images/hangman5.png"),
 ]
 
 hangman_image = canvas.create_image(500, 350, image=hangman_stages[5])
